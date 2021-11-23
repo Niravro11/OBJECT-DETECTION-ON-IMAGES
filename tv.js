@@ -1,6 +1,7 @@
 objectDetector= "";
 img = "";
 statuss = "";
+objects = [];
 
 function preload(){
   img = loadImage('downloadtv.png');
@@ -28,12 +29,20 @@ function gotResult(error, results) {
   objects = results;
 }
 
+function draw() {
+  image(img, 0, 0, 640, 420);
 
-function draw () {
-    image(img, 0, 0, 640, 420);
-    fill("#FF0000");
-    text("Tv", 180, 290);
-    noFill();
-    stroke("#FF0000");
-    rect( 171.60944938659668, 273.80893528461456,   219.4941759109497, 175.15275478363037); 
+      if(statuss != "")
+      {
+        for (var i = 0; i < objects.length; i++) {
+          document.getElementById("status").innerHTML = "Status : Object Detected";
+    
+          fill(255, 0, 0);
+          percent = floor(objects[i].confidence * 100);
+          text(objects[i].label + " " + percent + "%", objects[i].x + 15, objects[i].y + 15);
+          noFill();
+          stroke(255, 0, 0);
+          rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+      }
 }

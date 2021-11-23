@@ -1,6 +1,7 @@
 objectDetector= "";
 img = "";
 statuss = "";
+objects = [];
 
 function preload(){
   img = loadImage('downloadl.png');
@@ -29,11 +30,20 @@ function gotResult(error, results) {
 }
 
 
-function draw () {
-    image(img, 0, 0, 640, 420);
-    fill("#FF0000");
-    text("Mobile", 180, 20);
-    noFill();
-    stroke("#FF0000");
-    rect(173.42283725738525, 6.167078018188477,507.00064301490784, 426.5220522880554  );
+function draw() {
+  image(img, 0, 0, 640, 420);
+
+      if(statuss != "")
+      {
+        for (var i = 0; i < objects.length; i++) {
+          document.getElementById("status").innerHTML = "Status : Object Detected";
+    
+          fill(255, 0, 0);
+          percent = floor(objects[i].confidence * 100);
+          text(objects[i].label + " " + percent + "%", objects[i].x + 15, objects[i].y + 15);
+          noFill();
+          stroke(255, 0, 0);
+          rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+      }
 }

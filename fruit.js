@@ -1,6 +1,7 @@
 objectDetector= "";
 img = "";
 statuss = "";
+objects = [];
 
 function preload(){
   img = loadImage('downloadt.png');
@@ -29,17 +30,20 @@ function gotResult(error, results) {
 }
 
 
-function draw () {
-    image(img, 0, 0, 640, 420);
-    fill("#FF0000");
-    text("Banana", 160, 110);
-    noFill();
-    stroke("#FF0000");
-    rect(152.87327766418457, 96.13359719514847, 148.48783612251282, 243.83779615163803);
-    fill("#FF0000");
-    text("Bowl", 98, 295);
-    noFill();
-    stroke("#FF0000");
-    rect(84.33346450328827, 281.4168632030487,  336.0946327447891, 195.9795355796814);
+function draw() {
+  image(img, 0, 0, 640, 420);
 
+      if(statuss != "")
+      {
+        for (var i = 0; i < objects.length; i++) {
+          document.getElementById("status").innerHTML = "Status : Object Detected";
+    
+          fill(255, 0, 0);
+          percent = floor(objects[i].confidence * 100);
+          text(objects[i].label + " " + percent + "%", objects[i].x + 15, objects[i].y + 15);
+          noFill();
+          stroke(255, 0, 0);
+          rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+      }
 }
